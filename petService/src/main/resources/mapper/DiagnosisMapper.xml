@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingge.springboot.mapper.DiagnosisMapper">
+
+    <select id="findPage" resultType="com.qingge.springboot.VO.DiagnosisVO">
+        SELECT distinct diagnosis.id,pet.name,sys_user.nickname,diagnosis.info,diagnosis.type,diagnosis.status,diagnosis.create_time
+        from diagnosis,sys_user,pet
+        <where>
+            sys_user.id = diagnosis.user_id
+            and pet.id = diagnosis.pet_id
+            <if test="info != null and info != ''">
+                and info like concat('%', #{info},'%')
+            </if>
+        </where>
+
+    </select>
+</mapper>
